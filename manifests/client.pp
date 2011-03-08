@@ -14,7 +14,16 @@ class munin::client {
 	}
 
 	case $operatingsystem {
-		darwin: { include munin::client::darwin }
+		darwin: { 
+			include munin::client::darwin 
+		}
+		redhat: {
+			include munin::client::redhat
+		}
+		centos: {
+			info ( "Trying to configure CentOS's munin with RedHat class" )
+			include munin::client::redhat
+		}
 		debian: {
 			include munin::client::debian
 			include munin::plugins::debian
@@ -116,6 +125,35 @@ class munin::client::debian
 		ensure => running, 
 		# sarge's munin-node init script has no status
 		hasstatus => $lsbdistcodename ? { sarge => false, default => true }
+	}
+
+	munin::register { $fqdn: }
+
+	# workaround bug in munin_node_configure
+	plugin { "postfix_mailvolume": ensure => absent }
+}
+
+class munin::client::redhat
+{
+
+	package { "munin-node": ensure => installed }
+
+	file {
+		"/etc/munin/":
+			ensure => directory,
+			mode => 0755, owner => root, group => root;
+		"/etc/munin/munin-node.conf":
+			content => template("munin/munin-node.conf.${operatingsystem}."),
+			mode => 0644, owner => root, group => root,
+			# this has to be installed before the package, so the postinst can
+			# boot the munin-node without failure!
+			before => Package["munin-node"],
+			notify => Service["munin-node"],
+	}
+
+	service { "munin-node":
+		ensure => running, 
+		hasstatus => true
 	}
 
 	munin::register { $fqdn: }
