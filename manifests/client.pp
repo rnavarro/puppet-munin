@@ -143,7 +143,7 @@ class munin::client::redhat
 			ensure => directory,
 			mode => 0755, owner => root, group => root;
 		"/etc/munin/munin-node.conf":
-			content => template("munin/munin-node.conf.${operatingsystem}."),
+			content => template("munin/munin-node.conf.${operatingsystem}"),
 			mode => 0644, owner => root, group => root,
 			# this has to be installed before the package, so the postinst can
 			# boot the munin-node without failure!
