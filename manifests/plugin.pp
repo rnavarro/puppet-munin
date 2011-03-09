@@ -119,7 +119,7 @@ class munin::plugins::debian inherits munin::plugins::base {
 
 }
 
-class munin::plugin::redhat inherits munin::plugins::base {
+class munin::plugins::redhat inherits munin::plugins::base {
 
 	file {
 		"/etc/munin/plugin-conf.d/munin-node":
