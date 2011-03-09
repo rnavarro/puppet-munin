@@ -119,6 +119,18 @@ class munin::plugins::debian inherits munin::plugins::base {
 
 }
 
+class munin::plugin::redhat inhertis munin::plugins::base {
+
+	file {
+		"/etc/munin/plugin-conf.d/munin-node":
+			source => [ "puppet:///modules/munin/munin-node.RedHat", "puppet:///modules/munin/munin-node" ],
+			mode => 0644, owner => root, group => root,
+			notify => Service[munin-node],
+			before => Package[munin-node];
+	}
+
+}
+
 class munin::plugins::vserver inherits munin::plugins::base {
 
 	plugin {

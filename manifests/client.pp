@@ -19,10 +19,12 @@ class munin::client {
 		}
 		redhat: {
 			include munin::client::redhat
+			include munin::plugins::redhat
 		}
 		centos: {
 			info ( "Trying to configure ${operatingsystem}'s munin with RedHat class" )
 			include munin::client::redhat
+			include munin::plugins::redhat
 		}
 		debian: {
 			include munin::client::debian
