@@ -119,15 +119,34 @@ class munin::plugins::debian inherits munin::plugins::base {
 
 }
 
-class munin::plugins::redhat inherits munin::plugins::base {
+class munin::plugins::redhat {
 
 	file {
+		[ "/etc/munin/plugins", "/etc/munin/plugin-conf.d" ]:
+			source => "puppet:///modules/common/empty",
+			ensure => directory, checksum => mtime,
+			ignore => '.ignore',
+			recurse => true, purge => true, force => true, 
+			mode => 0755, owner => root, group => root,
+			notify => Service[munin-node];
 		"/etc/munin/plugin-conf.d/munin-node":
-			source => [ "puppet:///modules/munin/munin-node.RedHat", "puppet:///modules/munin/munin-node" ],
+			source => [ "puppet:///modules/munin/munin-node.${lsbdistcodename}", "puppet:///modules/munin/munin-node" ],
 			mode => 0644, owner => root, group => root,
 			notify => Service[munin-node],
 			before => Package[munin-node];
 	}
+
+	plugin {
+		[ df_abs, forks, iostat, memory, processes, cpu, df_inode, irqstats,
+		  netstat, open_files, swap, df, entropy, interrupts, load, open_inodes,
+		  vmstat
+		]:
+			ensure => present;
+		acpi: 
+			ensure => $acpi_available;
+	}
+
+	include munin::plugins::interfaces
 
 }
 
