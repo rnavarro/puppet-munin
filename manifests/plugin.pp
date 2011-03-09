@@ -119,6 +119,15 @@ class munin::plugins::debian inherits munin::plugins::base {
 
 }
 
+class munin::plugins::vserver inherits munin::plugins::base {
+
+	plugin {
+		[ netstat, processes ]:
+			ensure => present;
+	}
+
+}
+
 class munin::plugins::redhat {
 
 	file {
@@ -130,7 +139,7 @@ class munin::plugins::redhat {
 			mode => 0755, owner => root, group => root,
 			notify => Service[munin-node];
 		"/etc/munin/plugin-conf.d/munin-node":
-			source => [ "puppet:///modules/munin/munin-node.${lsbdistcodename}", "puppet:///modules/munin/munin-node" ],
+			source => [ "puppet:///modules/munin/munin-node.RedHat", "puppet:///modules/munin/munin-node" ],
 			mode => 0644, owner => root, group => root,
 			notify => Service[munin-node],
 			before => Package[munin-node];
@@ -146,15 +155,13 @@ class munin::plugins::redhat {
 			ensure => $acpi_available;
 	}
 
-	include munin::plugins::interfaces
-
-}
-
-class munin::plugins::vserver inherits munin::plugins::base {
-
+	$ifs = gsub(split($munin_interfaces, " "), "(.+)", "if_\\1")
+	$if_errs = gsub(split($munin_interfaces, " "), "(.+)", "if_err_\\1")
 	plugin {
-		[ netstat, processes ]:
-			ensure => present;
+		$ifs: ensure => "if_";
+		$if_errs: ensure => "if_err_";
 	}
 
+
 }
+
