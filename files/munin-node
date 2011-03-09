@@ -12,34 +12,10 @@
 #                       individual plugins to find out which variables they
 #                       care about.
 
-[apt]
-user root
-
-[courier_mta_mailqueue]
-group daemon
-
-[courier_mta_mailstats]
-group adm
-
-[courier_mta_mailvolume]
-group adm
-
 [cps*]
 user root
 
-[exim_mailqueue]
-group mail, (Debian-exim)
-
-[exim_mailstats]
-group mail, adm
-
-[fw_conntrack]
-user root
-
-[fw_forwarded_local]
-user root
-
-[hddtemp_smartctl]
+[df*]
 user root
 
 [if_*]
@@ -51,22 +27,27 @@ user nobody
 [ip_*]
 user root
 
-[mysql*]
-user root
-env.mysqlopts --defaults-extra-file=/etc/mysql/debian.cnf
+#[mysql*]
+#user root
+#env.mysqlopts --defaults-extra-file=/etc/mysql/debian.cnf
 
-[postfix_mailqueue]
-user (postfix)
-
-[postfix_mailstats]
-group adm
-
-[postfix_mailvolume]
-group adm
-env.logfile mail.log
-
-[smart_*]
+[load]
 user root
 
-[vlan*]
+[memcached*]
+user root
+
+[memory]
+user root
+
+[nginx_*]
+user root
+
+[sendmail_*]
+user root
+
+[varnish_*]
+user root
+
+[yum]
 user root
