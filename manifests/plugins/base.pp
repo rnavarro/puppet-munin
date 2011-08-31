@@ -1,4 +1,5 @@
 class munin::plugins::base {
+	include munin::common
 
 	file {
 		[ "/etc/munin/plugins", "/etc/munin/plugin-conf.d" ]:

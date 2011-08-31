@@ -1,5 +1,6 @@
 class munin::snmp_collector
 {
+	include munin::common
 
 	file {
 		"${module_dir_path}/munin/create_snmp_links":

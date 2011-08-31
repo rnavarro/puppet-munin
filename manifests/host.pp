@@ -5,6 +5,7 @@
 class munin::host
 {
 	include munin::client
+	include munin::common
 
 	module_dir { [ "munin/nodes" ]: }
 

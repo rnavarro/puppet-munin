@@ -1,5 +1,7 @@
 define munin::register()
 {
+	include munin::common
+
 	$munin_port_real = $munin_port ? { '' => 4949, default => $munin_port }
 	$munin_host_real = $munin_host ? {
 		'' => $fqdn,
