@@ -25,5 +25,5 @@ class munin::client::redhat
 	munin::register { $fqdn: }
 
 	# workaround bug in munin_node_configure
-	plugin { "postfix_mailvolume": ensure => absent }
+	munin::plugin { "postfix_mailvolume": ensure => absent }
 }
