@@ -8,7 +8,7 @@ class munin::host
 
 	module_dir { [ "munin/nodes" ]: }
 
-	package { [ "munin", "nmap"]: ensure => installed, }
+	package { [ "munin", "nmap" ]: ensure => installed, }
 
 	File <<| tag == 'munin' |>>
 
@@ -25,8 +25,8 @@ class munin::host
 			before => File["/etc/munin/munin.conf"];
 	}
 	
-	file { ["/var/log/munin-update.log", "/var/log/munin-limits.log", 
-	        "/var/log/munin-graph.log", "/var/log/munin-html.log"]:
+	file { ["/var/log/munin/munin-update.log", "/var/log/munin/munin-limits.log", 
+	        "/var/log/munin/munin-graph.log", "/var/log/munin/munin-html.log"]:
 		ensure => present,
 		mode => 640, owner => munin, group => root;
   }
