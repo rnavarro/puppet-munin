@@ -88,6 +88,7 @@ env.mysqlconnection DBI:mysql:mysql;mysql_read_default_file=/etc/mysql/debian.cn
 
 [nginx_*]
 user root
+env.url http://localhost:8008/nginx_stats
 
 [postfix_mailqueue]
 user postfix

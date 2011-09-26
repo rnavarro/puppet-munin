@@ -92,6 +92,7 @@ group munin
 
 [nginx_*]
 user root
+env.url http://localhost:8008/nginx_stats
 
 [postfix_mailqueue]
 user postfix
